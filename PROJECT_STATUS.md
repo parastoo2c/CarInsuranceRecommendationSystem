@@ -12,7 +12,7 @@ This document provides an overview of what has been implemented and what remains
 ### Phase 1: System Setup (Weeks 1-2) ✓
 
 - [x] Project structure initialized with monorepo layout
-- [x] Docker Compose configuration for multi-service deployment
+- [] Docker Compose configuration for multi-service deployment
 - [x] Flask service with virtual environment and dependencies
 - [x] Django application with virtual environment and dependencies
 - [x] MongoDB connection and database utilities
@@ -75,7 +75,7 @@ This document provides an overview of what has been implemented and what remains
 **Deliverables**:
 - Explainable recommendation display with visual breakdowns ✓
 - AI extraction API operational ✓
-- Chrome extension prototype functional ✓
+- Chrome extension prototype functional
 - Complete API documentation ✓
 
 ## 🔄 Partially Implemented
@@ -138,11 +138,11 @@ This document provides an overview of what has been implemented and what remains
 | Multi-criteria recommendation | ✅ Complete | TOPSIS with 4 criteria |
 | Web dashboard | ✅ Complete | Django-based UI |
 | REST API | ✅ Complete | Flask microservice |
-| Chrome extension | ✅ Complete | MV3 popup |
+| Chrome extension |⏳ Pending | MV3 popup |
 | Explainability | ✅ Complete | Chart.js visualizations |
 | AI extraction | ✅ Complete | LLM + rule-based |
 | Database | ✅ Complete | MongoDB with 50+ plans |
-| Docker support | ✅ Complete | docker-compose.yml |
+| Docker support |⏳ Pending | docker-compose.yml |
 | Automated setup | ✅ Complete | setup.sh script |
 | Documentation | 🔄 Partial | Guides complete, governance pending |
 | Benchmarking | ⏳ Pending | Framework ready |
@@ -302,7 +302,7 @@ open http://localhost:8000
 | Multi-criteria recommender | TOPSIS with 4+ criteria | ✅ Complete (4 criteria) |
 | Explainability | Visual score breakdowns | ✅ Complete (Chart.js) |
 | Web dashboard | User-friendly interface | ✅ Complete (Django) |
-| Chrome extension | Quick recommendations | ✅ Complete (MV3) |
+| Chrome extension | Quick recommendations |
 | AI extraction | LLM integration | ✅ Complete (HF/Together) |
 | Benchmarking | vs. price-only baseline | ⏳ Pending |
 | Governance | Auditability & transparency | 🔄 Partial |
