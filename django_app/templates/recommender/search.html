@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}Search - Insurance Recommender{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2 text-center">Find Your Best Insurance Plan</h1>
+    <p class="text-gray-600 text-center mb-8">Enter your vehicle and location details to get personalized recommendations</p>
+
+    <div class="bg-white rounded-lg shadow-lg p-8">
+        <form method="POST" action="{% url 'recommender:results' %}" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- Vehicle Information -->
+            <div class="border-b pb-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Vehicle Information</h2>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="vehicle_make" class="block text-sm font-medium text-gray-700 mb-1">
+                            Vehicle Make *
+                        </label>
+                        <select name="vehicle_make" id="vehicle_make" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <option value="">Select make...</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Tesla">Tesla</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="vehicle_model" class="block text-sm font-medium text-gray-700 mb-1">
+                            Vehicle Model *
+                        </label>
+                        <input type="text" name="vehicle_model" id="vehicle_model" required
+                               placeholder="e.g., Camry, Civic, F-150"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label for="vehicle_variant" class="block text-sm font-medium text-gray-700 mb-1">
+                            Variant (Optional)
+                        </label>
+                        <input type="text" name="vehicle_variant" id="vehicle_variant"
+                               placeholder="e.g., SE, LE, XLT"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label for="vehicle_year" class="block text-sm font-medium text-gray-700 mb-1">
+                            Year *
+                        </label>
+                        <input type="number" name="vehicle_year" id="vehicle_year" required
+                               min="2000" max="2030" value="2022"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Location Information -->
+            <div class="border-b pb-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Location</h2>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="region_code" class="block text-sm font-medium text-gray-700 mb-1">
+                            ZIP Code *
+                        </label>
+                        <input type="text" name="region_code" id="region_code" required
+                               placeholder="e.g., 90210"
+                               pattern="[0-9]{5}"
+                               maxlength="5"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label for="city" class="block text-sm font-medium text-gray-700 mb-1">
+                            City (Optional)
+                        </label>
+                        <input type="text" name="city" id="city"
+                               placeholder="e.g., Los Angeles"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preferences -->
+            <div class="border-b pb-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Preferences</h2>
+                
+                <div class="mb-4">
+                    <label for="top_n" class="block text-sm font-medium text-gray-700 mb-1">
+                        Number of Recommendations
+                    </label>
+                    <select name="top_n" id="top_n"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="3" selected>Top 3</option>
+                        <option value="5">Top 5</option>
+                        <option value="10">Top 10</option>
+                    </select>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <p class="text-sm font-medium text-gray-700 mb-3">
+                        Customize Importance Weights (must sum to 1.0)
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-sm text-gray-600">Cost (λ₁)</label>
+                            <input type="number" name="weight_cost" step="0.05" min="0" max="1" value="0.30"
+                                   class="w-full px-3 py-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="text-sm text-gray-600">Coverage (λ₂)</label>
+                            <input type="number" name="weight_coverage" step="0.05" min="0" max="1" value="0.25"
+                                   class="w-full px-3 py-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="text-sm text-gray-600">Service (λ₃)</label>
+                            <input type="number" name="weight_service" step="0.05" min="0" max="1" value="0.25"
+                                   class="w-full px-3 py-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="text-sm text-gray-600">Reliability (λ₄)</label>
+                            <input type="number" name="weight_reliability" step="0.05" min="0" max="1" value="0.20"
+                                   class="w-full px-3 py-2 border rounded">
+                        </div>
+                    </div>
+                    
+                    <p class="text-xs text-gray-500 mt-2">
+                        💡 Tip: Increase cost weight for budget focus, or service/reliability for quality focus
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" 
+                        class="gradient-bg text-white px-8 py-3 rounded-lg font-bold text-lg hover:opacity-90 transition shadow-lg">
+                    Get Recommendations
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

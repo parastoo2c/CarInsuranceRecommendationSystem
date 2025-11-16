@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Insurance Recommender{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-900 mb-6">About This Project</h1>
+    
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+        <h2 class="text-2xl font-bold mb-4">Multi-Criteria Insurance Recommender System (MCRS)</h2>
+        
+        <p class="text-gray-700 mb-4">
+            Most insurance comparison platforms emphasize <strong>lowest premium pricing</strong> as the dominant ranking criterion. 
+            While this appeals to cost-sensitive consumers, it inadvertently fosters <strong>adverse selection</strong> — users select 
+            plans that minimize short-term cost but experience slow claims, poor service quality, and weak renewal experiences later.
+        </p>
+        
+        <p class="text-gray-700 mb-4">
+            This project proposes an <strong>AI-driven decision aid</strong> that ranks insurance plans by <strong>long-term value</strong>, 
+            integrating signals of cost, coverage quality, and service performance (claims handling, customer satisfaction, and renewal rates).
+        </p>
+    </div>
+    
+    <!-- Methodology -->
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+        <h2 class="text-2xl font-bold mb-4">Methodology</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <h3 class="font-bold text-lg mb-2">TOPSIS Algorithm</h3>
+                <p class="text-gray-700">
+                    The system uses the <strong>Technique for Order of Preference by Similarity to Ideal Solution (TOPSIS)</strong>, 
+                    a well-established Multi-Criteria Decision Making (MCDM) method that:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mt-2 space-y-1 ml-4">
+                    <li>Normalizes criteria across different scales</li>
+                    <li>Applies user-configurable weights (λ₁, λ₂, λ₃, λ₄)</li>
+                    <li>Calculates distances to ideal and anti-ideal solutions</li>
+                    <li>Ranks alternatives based on relative closeness</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="font-bold text-lg mb-2">Evaluation Criteria</h3>
+                <div class="grid md:grid-cols-2 gap-4 mt-3">
+                    <div class="border-l-4 border-green-500 pl-4">
+                        <strong>Cost Efficiency (λ₁)</strong>
+                        <p class="text-sm text-gray-600">Normalized premium affordability</p>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <strong>Coverage Adequacy (λ₂)</strong>
+                        <p class="text-sm text-gray-600">IDV and add-on evaluation</p>
+                    </div>
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <strong>Service Quality (λ₃)</strong>
+                        <p class="text-sm text-gray-600">Claims TAT, approval rate, CSAT</p>
+                    </div>
+                    <div class="border-l-4 border-orange-500 pl-4">
+                        <strong>Reliability (λ₄)</strong>
+                        <p class="text-sm text-gray-600">Renewal rates, complaint ratio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tech Stack -->
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+        <h2 class="text-2xl font-bold mb-4">Technology Stack</h2>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            <div>
+                <h3 class="font-bold mb-2">Backend</h3>
+                <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• Flask 3.x (API)</li>
+                    <li>• Django 5.x (Dashboard)</li>
+                    <li>• MongoDB 7.x (Database)</li>
+                    <li>• Python 3.11</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="font-bold mb-2">AI/ML</h3>
+                <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• scikit-learn</li>
+                    <li>• NumPy / Pandas</li>
+                    <li>• TOPSIS Algorithm</li>
+                    <li>• SHAP (Optional)</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="font-bold mb-2">Frontend</h3>
+                <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• HTML5 / CSS3</li>
+                    <li>• Tailwind CSS</li>
+                    <li>• Chart.js</li>
+                    <li>• Vanilla JavaScript</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- References -->
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-bold mb-4">Key References</h2>
+        
+        <ul class="text-sm text-gray-700 space-y-2">
+            <li>
+                <strong>J.D. Power (2024).</strong> U.S. Auto Insurance Study. 
+                <a href="https://www.jdpower.com/business/press-releases/2024-us-auto-insurance-study" 
+                   class="text-purple-600 hover:underline" target="_blank">Link</a>
+            </li>
+            <li>
+                <strong>ScienceDirect (2024).</strong> A Comprehensive Survey on TOPSIS Method. 
+                <a href="https://www.sciencedirect.com/science/article/pii/S1947959X24000123" 
+                   class="text-purple-600 hover:underline" target="_blank">Link</a>
+            </li>
+            <li>
+                <strong>ACM (2024).</strong> Multi-Criteria Recommender Systems: Survey and Future Directions. 
+                <a href="https://dl.acm.org/doi/full/10.1145/3742421" 
+                   class="text-purple-600 hover:underline" target="_blank">Link</a>
+            </li>
+            <li>
+                <strong>NAIC (2025).</strong> Auto Insurance Database Report & Consumer Complaint Index.
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Project Info -->
+    <div class="mt-8 text-center text-gray-600">
+        <p class="mb-2">
+            <strong>Prepared by:</strong> Parastoo Toosi<br>
+            <strong>Institution:</strong> California State University, Fullerton (CSUF)
+        </p>
+        <p class="text-sm">
+            Academic Research Project | Fall 2025
+        </p>
+    </div>
+</div>
+{% endblock %}
+

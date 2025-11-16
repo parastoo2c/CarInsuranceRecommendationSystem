@@ -1,0 +1,59 @@
+[
+  {
+    "make": "Toyota",
+    "model": "Camry",
+    "variant": "SE",
+    "year_from": 2020,
+    "year_to": 2024,
+    "category": "Sedan"
+  },
+  {
+    "make": "Toyota",
+    "model": "Camry",
+    "variant": "LE",
+    "year_from": 2020,
+    "year_to": 2024,
+    "category": "Sedan"
+  },
+  {
+    "make": "Honda",
+    "model": "Civic",
+    "variant": "Sport",
+    "year_from": 2020,
+    "year_to": 2024,
+    "category": "Sedan"
+  },
+  {
+    "make": "Honda",
+    "model": "Accord",
+    "variant": "EX",
+    "year_from": 2020,
+    "year_to": 2024,
+    "category": "Sedan"
+  },
+  {
+    "make": "Ford",
+    "model": "F-150",
+    "variant": "XLT",
+    "year_from": 2020,
+    "year_to": 2024,
+    "category": "Truck"
+  },
+  {
+    "make": "Tesla",
+    "model": "Model 3",
+    "variant": "Standard Range",
+    "year_from": 2020,
+    "year_to": 2024,
+    "category": "Electric"
+  },
+  {
+    "make": "Chevrolet",
+    "model": "Silverado",
+    "variant": "LT",
+    "year_from": 2020,
+    "year_to": 2024,
+    "category": "Truck"
+  }
+]
+

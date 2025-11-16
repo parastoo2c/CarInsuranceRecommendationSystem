@@ -1,0 +1,1011 @@
+[
+  {
+    "plan_id": "PLAN_0000",
+    "insurer_name": "State Farm",
+    "plan_name": "Standard Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry LE"
+    ],
+    "region_codes": [
+      "93",
+      "91",
+      "95"
+    ],
+    "premium_annual": 1861.77,
+    "idv": 31998.73,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0001",
+    "insurer_name": "State Farm",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "95",
+      "94",
+      "90"
+    ],
+    "premium_annual": 2808.78,
+    "idv": 28083.02,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0002",
+    "insurer_name": "State Farm",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry LE"
+    ],
+    "region_codes": [
+      "90",
+      "95",
+      "94"
+    ],
+    "premium_annual": 1813.63,
+    "idv": 23564.57,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0003",
+    "insurer_name": "State Farm",
+    "plan_name": "Standard Truck Coverage",
+    "vehicle_types": [
+      "Ford F-150 XLT"
+    ],
+    "region_codes": [
+      "91",
+      "92",
+      "95"
+    ],
+    "premium_annual": 3145.8,
+    "idv": 38367.7,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0004",
+    "insurer_name": "State Farm",
+    "plan_name": "Standard Truck Coverage",
+    "vehicle_types": [
+      "Chevrolet Silverado LT"
+    ],
+    "region_codes": [
+      "95",
+      "93",
+      "94"
+    ],
+    "premium_annual": 2778.17,
+    "idv": 44230.87,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0005",
+    "insurer_name": "State Farm",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry LE"
+    ],
+    "region_codes": [
+      "93",
+      "95",
+      "92"
+    ],
+    "premium_annual": 1300.36,
+    "idv": 27354.26,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0006",
+    "insurer_name": "State Farm",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "91",
+      "93",
+      "95"
+    ],
+    "premium_annual": 1292.65,
+    "idv": 28747.29,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0007",
+    "insurer_name": "State Farm",
+    "plan_name": "Premium Truck Coverage",
+    "vehicle_types": [
+      "Chevrolet Silverado LT"
+    ],
+    "region_codes": [
+      "93",
+      "95",
+      "91"
+    ],
+    "premium_annual": 2157.95,
+    "idv": 40944.69,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0008",
+    "insurer_name": "State Farm",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Honda Civic Sport"
+    ],
+    "region_codes": [
+      "94",
+      "92",
+      "90"
+    ],
+    "premium_annual": 1420.06,
+    "idv": 20633.33,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0009",
+    "insurer_name": "State Farm",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "92",
+      "91",
+      "90"
+    ],
+    "premium_annual": 2666.72,
+    "idv": 30019.24,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0010",
+    "insurer_name": "Geico",
+    "plan_name": "Premium Truck Coverage",
+    "vehicle_types": [
+      "Chevrolet Silverado LT"
+    ],
+    "region_codes": [
+      "91",
+      "92",
+      "95"
+    ],
+    "premium_annual": 3307.57,
+    "idv": 43230.75,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0011",
+    "insurer_name": "Geico",
+    "plan_name": "Standard Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "92",
+      "93",
+      "94"
+    ],
+    "premium_annual": 2456.03,
+    "idv": 29498.6,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0012",
+    "insurer_name": "Geico",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Honda Civic Sport"
+    ],
+    "region_codes": [
+      "94",
+      "93",
+      "95"
+    ],
+    "premium_annual": 1618.42,
+    "idv": 27116.82,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0013",
+    "insurer_name": "Geico",
+    "plan_name": "Standard Truck Coverage",
+    "vehicle_types": [
+      "Ford F-150 XLT"
+    ],
+    "region_codes": [
+      "93",
+      "90",
+      "94"
+    ],
+    "premium_annual": 2387.07,
+    "idv": 34037.77,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0014",
+    "insurer_name": "Geico",
+    "plan_name": "Premium Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "92",
+      "93",
+      "90"
+    ],
+    "premium_annual": 2339.84,
+    "idv": 24373.17,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0015",
+    "insurer_name": "Geico",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry LE"
+    ],
+    "region_codes": [
+      "91",
+      "93",
+      "95"
+    ],
+    "premium_annual": 1871.1,
+    "idv": 22655.01,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0016",
+    "insurer_name": "Geico",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Honda Civic Sport"
+    ],
+    "region_codes": [
+      "90",
+      "94",
+      "91"
+    ],
+    "premium_annual": 1615.91,
+    "idv": 33285.85,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0017",
+    "insurer_name": "Geico",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "91",
+      "90",
+      "93"
+    ],
+    "premium_annual": 1779.83,
+    "idv": 28088.96,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0018",
+    "insurer_name": "Geico",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "92",
+      "95",
+      "90"
+    ],
+    "premium_annual": 1143.11,
+    "idv": 31866.34,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0019",
+    "insurer_name": "Geico",
+    "plan_name": "Elite Truck Coverage",
+    "vehicle_types": [
+      "Ford F-150 XLT"
+    ],
+    "region_codes": [
+      "94",
+      "95",
+      "90"
+    ],
+    "premium_annual": 2197.76,
+    "idv": 38719.6,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0020",
+    "insurer_name": "Progressive",
+    "plan_name": "Standard Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "94",
+      "91",
+      "92"
+    ],
+    "premium_annual": 2495.93,
+    "idv": 25795.16,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0021",
+    "insurer_name": "Progressive",
+    "plan_name": "Basic Truck Coverage",
+    "vehicle_types": [
+      "Ford F-150 XLT"
+    ],
+    "region_codes": [
+      "90",
+      "93",
+      "95"
+    ],
+    "premium_annual": 1544.91,
+    "idv": 36070.79,
+    "add_ons": [],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0022",
+    "insurer_name": "Progressive",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "93",
+      "90",
+      "95"
+    ],
+    "premium_annual": 1637.02,
+    "idv": 25340.89,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0023",
+    "insurer_name": "Progressive",
+    "plan_name": "Standard Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "94",
+      "90",
+      "91"
+    ],
+    "premium_annual": 2010.63,
+    "idv": 41952.48,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0024",
+    "insurer_name": "Progressive",
+    "plan_name": "Premium Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "90",
+      "93",
+      "95"
+    ],
+    "premium_annual": 1871.89,
+    "idv": 34088.29,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0025",
+    "insurer_name": "Progressive",
+    "plan_name": "Standard Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "93",
+      "90",
+      "91"
+    ],
+    "premium_annual": 1629.94,
+    "idv": 30416.91,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0026",
+    "insurer_name": "Progressive",
+    "plan_name": "Standard Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "93",
+      "90",
+      "92"
+    ],
+    "premium_annual": 2482.5,
+    "idv": 32070.43,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0027",
+    "insurer_name": "Progressive",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Honda Civic Sport"
+    ],
+    "region_codes": [
+      "94",
+      "91",
+      "92"
+    ],
+    "premium_annual": 2084.27,
+    "idv": 29340.1,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0028",
+    "insurer_name": "Progressive",
+    "plan_name": "Elite Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "95",
+      "93",
+      "91"
+    ],
+    "premium_annual": 2665.91,
+    "idv": 51850.16,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0029",
+    "insurer_name": "Progressive",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Honda Civic Sport"
+    ],
+    "region_codes": [
+      "95",
+      "92",
+      "94"
+    ],
+    "premium_annual": 1318.59,
+    "idv": 25556.35,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0030",
+    "insurer_name": "Allstate",
+    "plan_name": "Standard Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "90",
+      "92",
+      "91"
+    ],
+    "premium_annual": 3246.51,
+    "idv": 43377.36,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0031",
+    "insurer_name": "Allstate",
+    "plan_name": "Standard Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "93",
+      "92",
+      "90"
+    ],
+    "premium_annual": 2073.65,
+    "idv": 46984.63,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0032",
+    "insurer_name": "Allstate",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry LE"
+    ],
+    "region_codes": [
+      "90",
+      "95",
+      "94"
+    ],
+    "premium_annual": 2294.88,
+    "idv": 29672.85,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0033",
+    "insurer_name": "Allstate",
+    "plan_name": "Premium Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "94",
+      "93",
+      "91"
+    ],
+    "premium_annual": 3880.79,
+    "idv": 36969.91,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0034",
+    "insurer_name": "Allstate",
+    "plan_name": "Elite Truck Coverage",
+    "vehicle_types": [
+      "Chevrolet Silverado LT"
+    ],
+    "region_codes": [
+      "91",
+      "95",
+      "90"
+    ],
+    "premium_annual": 2205.46,
+    "idv": 31433.66,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0035",
+    "insurer_name": "Allstate",
+    "plan_name": "Premium Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "91",
+      "90",
+      "94"
+    ],
+    "premium_annual": 2188.16,
+    "idv": 39452.36,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0036",
+    "insurer_name": "Allstate",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "95",
+      "94",
+      "92"
+    ],
+    "premium_annual": 1287.21,
+    "idv": 30506.84,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0037",
+    "insurer_name": "Allstate",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "94",
+      "92",
+      "95"
+    ],
+    "premium_annual": 1976.19,
+    "idv": 34129.72,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0038",
+    "insurer_name": "Allstate",
+    "plan_name": "Standard Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "93",
+      "90",
+      "92"
+    ],
+    "premium_annual": 1664.79,
+    "idv": 30127.24,
+    "add_ons": [],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0039",
+    "insurer_name": "Allstate",
+    "plan_name": "Premium Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "93",
+      "91",
+      "94"
+    ],
+    "premium_annual": 2605.78,
+    "idv": 39249.98,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0040",
+    "insurer_name": "USAA",
+    "plan_name": "Premium Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "94",
+      "90",
+      "92"
+    ],
+    "premium_annual": 2019.95,
+    "idv": 33787.73,
+    "add_ons": [
+      "Zero Depreciation",
+      "Engine Protection"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0041",
+    "insurer_name": "USAA",
+    "plan_name": "Basic Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry LE"
+    ],
+    "region_codes": [
+      "90",
+      "92",
+      "94"
+    ],
+    "premium_annual": 2104.24,
+    "idv": 33817.49,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Basic"
+  },
+  {
+    "plan_id": "PLAN_0042",
+    "insurer_name": "USAA",
+    "plan_name": "Premium Electric Coverage",
+    "vehicle_types": [
+      "Tesla Model 3 Standard Range"
+    ],
+    "region_codes": [
+      "91",
+      "95",
+      "93"
+    ],
+    "premium_annual": 3140.31,
+    "idv": 35437.56,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0043",
+    "insurer_name": "USAA",
+    "plan_name": "Standard Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "91",
+      "94",
+      "93"
+    ],
+    "premium_annual": 2461.07,
+    "idv": 33979.81,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Standard"
+  },
+  {
+    "plan_id": "PLAN_0044",
+    "insurer_name": "USAA",
+    "plan_name": "Premium Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "93",
+      "92",
+      "94"
+    ],
+    "premium_annual": 1505.67,
+    "idv": 28683.88,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0045",
+    "insurer_name": "USAA",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Toyota Camry SE"
+    ],
+    "region_codes": [
+      "90",
+      "91",
+      "92"
+    ],
+    "premium_annual": 2332.82,
+    "idv": 32104.98,
+    "add_ons": [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    "tier": "Elite"
+  },
+  {
+    "plan_id": "PLAN_0046",
+    "insurer_name": "USAA",
+    "plan_name": "Premium Truck Coverage",
+    "vehicle_types": [
+      "Chevrolet Silverado LT"
+    ],
+    "region_codes": [
+      "93",
+      "95",
+      "94"
+    ],
+    "premium_annual": 3377.73,
+    "idv": 40033.64,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0047",
+    "insurer_name": "USAA",
+    "plan_name": "Premium Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "95",
+      "94",
+      "90"
+    ],
+    "premium_annual": 2256.1,
+    "idv": 34496.73,
+    "add_ons": [
+      "Personal Accident Cover",
+      "Roadside Assistance"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0048",
+    "insurer_name": "USAA",
+    "plan_name": "Premium Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "95",
+      "90",
+      "93"
+    ],
+    "premium_annual": 2356.17,
+    "idv": 25319.72,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    "tier": "Premium"
+  },
+  {
+    "plan_id": "PLAN_0049",
+    "insurer_name": "USAA",
+    "plan_name": "Elite Sedan Coverage",
+    "vehicle_types": [
+      "Honda Accord EX"
+    ],
+    "region_codes": [
+      "91",
+      "94",
+      "92"
+    ],
+    "premium_annual": 2310.41,
+    "idv": 34561.65,
+    "add_ons": [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    "tier": "Elite"
+  }
+]

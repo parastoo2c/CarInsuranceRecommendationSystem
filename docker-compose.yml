@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: insurance_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: insurance_recommender
+    networks:
+      - insurance_network
+
+  flask_service:
+    build:
+      context: ./flask_service
+      dockerfile: Dockerfile
+    container_name: insurance_flask
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/
+      - MONGODB_DB_NAME=insurance_recommender
+      - FLASK_ENV=development
+    depends_on:
+      - mongodb
+    volumes:
+      - ./flask_service:/app
+    networks:
+      - insurance_network
+    command: python app.py
+
+  django_app:
+    build:
+      context: ./django_app
+      dockerfile: Dockerfile
+    container_name: insurance_django
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/
+      - MONGODB_DB_NAME=insurance_recommender
+      - FLASK_SERVICE_URL=http://flask_service:5000
+      - DJANGO_DEBUG=True
+    depends_on:
+      - mongodb
+      - flask_service
+    volumes:
+      - ./django_app:/app
+    networks:
+      - insurance_network
+    command: python manage.py runserver 0.0.0.0:8000
+
+  redis:
+    image: redis:7-alpine
+    container_name: insurance_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - insurance_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  insurance_network:
+    driver: bridge
+

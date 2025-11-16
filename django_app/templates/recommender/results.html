@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+
+{% block title %}Results - Insurance Recommender{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">Your Personalized Recommendations</h1>
+    <p class="text-gray-600">
+        For <strong>{{ vehicle }}</strong> in <strong>{{ region }}</strong>
+        | Algorithm: <span class="text-purple-700 font-semibold">{{ metadata.algorithm }}</span>
+        | Evaluated {{ metadata.total_plans_evaluated }} plans
+    </p>
+</div>
+
+<!-- Weights Used -->
+<div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+    <p class="font-semibold text-blue-900 mb-2">Weights Applied:</p>
+    <div class="flex space-x-4 text-sm text-blue-800">
+        <span>Cost: {{ weights_used.cost|floatformat:2 }}</span>
+        <span>Coverage: {{ weights_used.coverage|floatformat:2 }}</span>
+        <span>Service: {{ weights_used.service|floatformat:2 }}</span>
+        <span>Reliability: {{ weights_used.reliability|floatformat:2 }}</span>
+    </div>
+</div>
+
+<!-- Recommendations -->
+<div class="space-y-6">
+    {% for rec in recommendations %}
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6">
+            <div class="flex justify-between items-start">
+                <div>
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span class="text-3xl font-bold">#{{ rec.rank }}</span>
+                        <span class="text-2xl">{{ rec.insurer_name }}</span>
+                    </div>
+                    <p class="text-lg opacity-90">{{ rec.plan_name }}</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-4xl font-bold">${{ rec.premium_annual|floatformat:0 }}</div>
+                    <div class="text-sm opacity-90">per year</div>
+                </div>
+            </div>
+            
+            <!-- Overall Score -->
+            <div class="mt-4">
+                <div class="flex items-center justify-between text-sm mb-1">
+                    <span>Overall Score</span>
+                    <span class="font-bold">{{ rec.final_score|floatformat:3 }}</span>
+                </div>
+                <div class="w-full bg-white bg-opacity-30 rounded-full h-3">
+                    <div class="bg-white h-3 rounded-full" style="width: {{ rec.final_score|floatformat:2|floatformat:0 }}%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Plan Details -->
+        <div class="p-6">
+            <!-- Rationale -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                <p class="text-sm font-semibold text-yellow-900 mb-1">💡 Why This Plan?</p>
+                <p class="text-sm text-yellow-800">{{ rec.rationale }}</p>
+            </div>
+            
+            <!-- Component Scores Grid -->
+            <div class="grid md:grid-cols-4 gap-4 mb-6">
+                <!-- Cost Score -->
+                <div class="text-center p-4 bg-green-50 rounded-lg">
+                    <div class="text-3xl mb-2">💰</div>
+                    <div class="text-sm text-gray-600 mb-1">Cost</div>
+                    <div class="text-2xl font-bold text-green-700">
+                        {{ rec.cost_score.normalized|floatformat:2 }}
+                    </div>
+                    <div class="text-xs text-gray-500">weight: {{ rec.cost_score.weight }}</div>
+                </div>
+                
+                <!-- Coverage Score -->
+                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                    <div class="text-3xl mb-2">🛡️</div>
+                    <div class="text-sm text-gray-600 mb-1">Coverage</div>
+                    <div class="text-2xl font-bold text-blue-700">
+                        {{ rec.coverage_score.normalized|floatformat:2 }}
+                    </div>
+                    <div class="text-xs text-gray-500">weight: {{ rec.coverage_score.weight }}</div>
+                </div>
+                
+                <!-- Service Score -->
+                <div class="text-center p-4 bg-purple-50 rounded-lg">
+                    <div class="text-3xl mb-2">⚡</div>
+                    <div class="text-sm text-gray-600 mb-1">Service</div>
+                    <div class="text-2xl font-bold text-purple-700">
+                        {{ rec.service_score.normalized|floatformat:2 }}
+                    </div>
+                    <div class="text-xs text-gray-500">weight: {{ rec.service_score.weight }}</div>
+                </div>
+                
+                <!-- Reliability Score -->
+                <div class="text-center p-4 bg-orange-50 rounded-lg">
+                    <div class="text-3xl mb-2">⭐</div>
+                    <div class="text-sm text-gray-600 mb-1">Reliability</div>
+                    <div class="text-2xl font-bold text-orange-700">
+                        {{ rec.reliability_score.normalized|floatformat:2 }}
+                    </div>
+                    <div class="text-xs text-gray-500">weight: {{ rec.reliability_score.weight }}</div>
+                </div>
+            </div>
+            
+            <!-- Detailed Metrics -->
+            <div class="border-t pt-4">
+                <button onclick="toggleDetails('details-{{ forloop.counter }}')" 
+                        class="w-full text-left font-semibold text-purple-700 hover:text-purple-900 flex justify-between items-center">
+                    <span>View Detailed Metrics</span>
+                    <svg class="w-5 h-5 transform transition-transform" id="icon-{{ forloop.counter }}" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                
+                <div id="details-{{ forloop.counter }}" class="hidden mt-4 space-y-2 text-sm">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        {% if rec.coverage_idv %}
+                        <div class="flex justify-between border-b pb-2">
+                            <span class="text-gray-600">Coverage IDV:</span>
+                            <span class="font-semibold">${{ rec.coverage_idv|floatformat:0 }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if rec.claim_tat_days %}
+                        <div class="flex justify-between border-b pb-2">
+                            <span class="text-gray-600">Claim TAT:</span>
+                            <span class="font-semibold">{{ rec.claim_tat_days }} days</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if rec.claim_approval_rate %}
+                        <div class="flex justify-between border-b pb-2">
+                            <span class="text-gray-600">Approval Rate:</span>
+                            <span class="font-semibold">{{ rec.claim_approval_rate|floatformat:1 }}%</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if rec.csat_score %}
+                        <div class="flex justify-between border-b pb-2">
+                            <span class="text-gray-600">Customer Satisfaction:</span>
+                            <span class="font-semibold">{{ rec.csat_score|floatformat:1 }}/100</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if rec.renewal_rate %}
+                        <div class="flex justify-between border-b pb-2">
+                            <span class="text-gray-600">Renewal Rate:</span>
+                            <span class="font-semibold">{{ rec.renewal_rate|floatformat:1 }}%</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if rec.complaint_ratio %}
+                        <div class="flex justify-between border-b pb-2">
+                            <span class="text-gray-600">Complaint Ratio:</span>
+                            <span class="font-semibold">{{ rec.complaint_ratio|floatformat:2 }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Data Quality Indicator -->
+                    <div class="mt-4 pt-4 border-t">
+                        <div class="flex justify-between items-center text-xs text-gray-600">
+                            <span>Data Completeness:</span>
+                            <span class="font-semibold">{{ rec.data_completeness|floatformat:0 }}%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: {{ rec.data_completeness|floatformat:0 }}%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Score Breakdown Chart -->
+                    <div class="mt-4">
+                        <canvas id="chart-{{ forloop.counter }}" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Actions -->
+<div class="mt-8 text-center space-x-4">
+    <a href="{% url 'recommender:search' %}" 
+       class="inline-block bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
+        New Search
+    </a>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleDetails(id) {
+    const element = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id.split('-')[1]);
+    
+    if (element.classList.contains('hidden')) {
+        element.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+        
+        // Render chart when opened
+        renderChart(id.split('-')[1]);
+    } else {
+        element.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+    }
+}
+
+function renderChart(index) {
+    const ctx = document.getElementById('chart-' + index);
+    if (!ctx || ctx.chartRendered) return;
+    
+    {% for rec in recommendations %}
+    if ({{ forloop.counter }} == index) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Cost', 'Coverage', 'Service', 'Reliability'],
+                datasets: [{
+                    label: 'Weighted Contribution',
+                    data: [
+                        {{ rec.cost_score.contribution }},
+                        {{ rec.coverage_score.contribution }},
+                        {{ rec.service_score.contribution }},
+                        {{ rec.reliability_score.contribution }}
+                    ],
+                    backgroundColor: [
+                        'rgba(34, 197, 94, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(168, 85, 247, 0.7)',
+                        'rgba(251, 146, 60, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgb(34, 197, 94)',
+                        'rgb(59, 130, 246)',
+                        'rgb(168, 85, 247)',
+                        'rgb(251, 146, 60)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Score Breakdown (Weighted Contributions)',
+                        font: { size: 14, weight: 'bold' }
+                    },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Contribution' }
+                    }
+                }
+            }
+        });
+        ctx.chartRendered = true;
+    }
+    {% endfor %}
+}
+</script>
+{% endblock %}
+

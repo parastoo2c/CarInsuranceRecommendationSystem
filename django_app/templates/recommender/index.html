@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Insurance Recommender{% endblock %}
+
+{% block content %}
+<div class="text-center mb-12">
+    <h1 class="text-5xl font-bold text-gray-900 mb-4">
+        Find Your Best Insurance Match
+    </h1>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Beyond lowest price: Discover insurance plans optimized for cost, coverage, and service quality using AI-powered multi-criteria analysis.
+    </p>
+</div>
+
+<!-- Hero Section -->
+<div class="gradient-bg rounded-lg shadow-xl p-8 text-white mb-12">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+            <h2 class="text-3xl font-bold mb-4">Why Use Our Recommender?</h2>
+            <ul class="space-y-3">
+                <li class="flex items-start">
+                    <svg class="w-6 h-6 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span><strong>Multi-Criteria Optimization:</strong> Balances cost, coverage, service speed, and customer satisfaction</span>
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-6 h-6 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span><strong>Transparent Scoring:</strong> See exactly how each plan is ranked with explainable AI</span>
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-6 h-6 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span><strong>Data-Driven Decisions:</strong> Powered by TOPSIS algorithm and real-world performance signals</span>
+                </li>
+            </ul>
+        </div>
+        <div class="text-center">
+            <a href="{% url 'recommender:search' %}" class="inline-block bg-white text-purple-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition shadow-lg">
+                Start Your Search →
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Features Grid -->
+<div class="grid md:grid-cols-4 gap-6 mb-12">
+    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-3">💰</div>
+        <h3 class="text-lg font-bold mb-2">Cost Efficiency</h3>
+        <p class="text-gray-600 text-sm">Normalized premium affordability analysis</p>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-3">🛡️</div>
+        <h3 class="text-lg font-bold mb-2">Coverage Quality</h3>
+        <p class="text-gray-600 text-sm">IDV and comprehensive add-on evaluation</p>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-3">⚡</div>
+        <h3 class="text-lg font-bold mb-2">Service Speed</h3>
+        <p class="text-gray-600 text-sm">Claim turnaround and approval rates</p>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-3">⭐</div>
+        <h3 class="text-lg font-bold mb-2">Reliability</h3>
+        <p class="text-gray-600 text-sm">Customer satisfaction and retention metrics</p>
+    </div>
+</div>
+
+<!-- How It Works -->
+<div class="bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+            <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl font-bold text-purple-700">1</span>
+            </div>
+            <h3 class="font-bold mb-2">Enter Your Details</h3>
+            <p class="text-gray-600 text-sm">Vehicle model, location, and preferences</p>
+        </div>
+        
+        <div class="text-center">
+            <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl font-bold text-purple-700">2</span>
+            </div>
+            <h3 class="font-bold mb-2">AI Analysis</h3>
+            <p class="text-gray-600 text-sm">TOPSIS algorithm evaluates all criteria</p>
+        </div>
+        
+        <div class="text-center">
+            <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl font-bold text-purple-700">3</span>
+            </div>
+            <h3 class="font-bold mb-2">Get Recommendations</h3>
+            <p class="text-gray-600 text-sm">Ranked plans with transparent explanations</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

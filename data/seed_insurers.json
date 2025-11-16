@@ -1,0 +1,38 @@
+[
+  {
+    "name": "State Farm",
+    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "website": "https://www.statefarm.com",
+    "phone": "1-800-STATE-FARM",
+    "description": "Large national insurer with extensive California presence"
+  },
+  {
+    "name": "Geico",
+    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "website": "https://www.geico.com",
+    "phone": "1-800-861-8380",
+    "description": "Online-focused insurer known for competitive pricing"
+  },
+  {
+    "name": "Progressive",
+    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "website": "https://www.progressive.com",
+    "phone": "1-800-PROGRESSIVE",
+    "description": "Technology-driven insurer with usage-based options"
+  },
+  {
+    "name": "Allstate",
+    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "website": "https://www.allstate.com",
+    "phone": "1-800-ALLSTATE",
+    "description": "Established insurer with comprehensive coverage options"
+  },
+  {
+    "name": "USAA",
+    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "website": "https://www.usaa.com",
+    "phone": "1-800-531-USAA",
+    "description": "Military-focused insurer with high satisfaction ratings"
+  }
+]
+
