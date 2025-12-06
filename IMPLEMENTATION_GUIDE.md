@@ -1,513 +1,464 @@
-# Implementation Guide - Insurance Recommender System
+# Implementation Guide - California Insurance Recommender
 
-Detailed technical guide for understanding and extending the system.
+Technical details for developers extending or understanding the system implementation.
 
-## Architecture Overview
+## 📋 Table of Contents
 
-The system follows a microservices architecture:
+- [TOPSIS Algorithm](#topsis-algorithm)
+- [Database Schema](#database-schema)
+- [API Endpoints](#api-endpoints)
+- [Extending the System](#extending-the-system)
+- [Code Architecture](#code-architecture)
 
-```
-┌─────────────┐     HTTP/JSON      ┌──────────────┐
-│   Browser   │◄──────────────────►│    Django    │
-│             │                     │  Dashboard   │
-└─────────────┘                     └──────┬───────┘
-                                           │
-                 ┌─────────────────────────┘
-                 │ REST API
-                 ▼
-           ┌──────────┐           ┌──────────────┐
-           │  Flask   │◄─────────►│   MongoDB    │
-           │ Service  │  PyMongo  │   Database   │
-           └──────────┘           └──────────────┘
-                 │
-                 │ (Optional)
-                 ▼
-           ┌──────────┐
-           │   LLM    │
-           │   APIs   │
-           └──────────┘
-```
+---
 
-## Core Components
+## TOPSIS Algorithm
 
-### 1. Flask Recommendation Service
+The system uses TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) for multi-criteria decision making.
 
-**Purpose**: Implements the TOPSIS algorithm and serves recommendation API.
+**Location:** `flask_service/models/topsis.py`
 
-**Key Files**:
-- `app.py` - Main Flask application with API endpoints
-- `models/topsis.py` - TOPSIS algorithm implementation
-- `models/schemas.py` - Pydantic validation schemas
-- `database.py` - MongoDB connection and utilities
-- `extraction/llm_extractor.py` - AI data extraction
+### How It Works
 
-**API Endpoints**:
-
-1. **GET /health** - Health check
-   ```bash
-   curl http://localhost:5000/health
-   ```
-
-2. **GET /api/stats** - Database statistics
-   ```bash
-   curl http://localhost:5000/api/stats
-   ```
-
-3. **POST /api/recommend** - Get recommendations
-   ```bash
-   curl -X POST http://localhost:5000/api/recommend \
-     -H "Content-Type: application/json" \
-     -d '{
-       "vehicle_make": "Toyota",
-       "vehicle_model": "Camry",
-       "region_code": "90210",
-       "top_n": 3,
-       "weights": {
-         "cost": 0.3,
-         "coverage": 0.25,
-         "service": 0.25,
-         "reliability": 0.2
-       }
-     }'
-   ```
-
-4. **POST /api/extract** - Extract plan data
-   ```bash
-   curl -X POST http://localhost:5000/api/extract \
-     -H "Content-Type: application/json" \
-     -d '{
-       "source_type": "text",
-       "content": "Plan details...",
-       "insurer_name": "State Farm"
-     }'
-   ```
-
-### 2. TOPSIS Algorithm
-
-**Location**: `flask_service/models/topsis.py`
-
-**Algorithm Steps**:
-
-1. **Decision Matrix Construction**
-   ```python
-   matrix = prepare_decision_matrix(plans)
-   # Returns: DataFrame with criteria (cost, coverage, service, reliability)
-   ```
-
-2. **Normalization** (Vector Normalization)
-   ```
-   normalized_value = value / sqrt(sum(values²))
-   ```
-
-3. **Weight Application**
-   ```
-   weighted_value = normalized_value × weight
-   ```
-
-4. **Ideal Solutions**
-   ```
-   ideal = max(weighted_values)
-   anti_ideal = min(weighted_values)
-   ```
-
-5. **Distance Calculation** (Euclidean)
-   ```
-   dist_ideal = sqrt(sum((weighted - ideal)²))
-   dist_anti_ideal = sqrt(sum((weighted - anti_ideal)²))
-   ```
-
-6. **Relative Closeness** (Final Score)
-   ```
-   score = dist_anti_ideal / (dist_ideal + dist_anti_ideal)
-   ```
-
-**Criteria Definitions**:
-
-| Criterion | Formula | Direction |
-|-----------|---------|-----------|
-| **Cost** | `1 / premium` | Higher is better |
-| **Coverage** | `IDV value` | Higher is better |
-| **Service** | `(1/claim_tat × 0.4) + (approval_rate × 0.3) + (csat × 0.3)` | Higher is better |
-| **Reliability** | `renewal_rate × (1 - complaint_ratio)` | Higher is better |
-
-### 3. Django Dashboard
-
-**Purpose**: User-facing web interface for search and results.
-
-**Key Files**:
-- `dashboard/settings.py` - Django configuration
-- `recommender/views.py` - View logic
-- `recommender/urls.py` - URL routing
-- `templates/` - HTML templates
-
-**Views**:
-
-1. **index** - Landing page
-2. **search** - Search form
-3. **results** - Display recommendations (calls Flask API)
-4. **about** - Project information
-
-**Template Structure**:
-```
-templates/
-├── base.html                    # Base template with nav/footer
-└── recommender/
-    ├── index.html              # Home page
-    ├── search.html             # Search form
-    ├── results.html            # Results with Chart.js
-    └── about.html              # About page
-```
-
-### 4. MongoDB Database
-
-**Collections**:
-
-1. **insurers** - Insurance companies
-   ```javascript
-   {
-     "_id": ObjectId,
-     "name": "State Farm",
-     "region_codes": ["90", "91", "92"],
-     "website": "https://...",
-     "phone": "1-800-...",
-     "description": "..."
-   }
-   ```
-
-2. **plans** - Insurance plans
-   ```javascript
-   {
-     "_id": ObjectId,
-     "insurer_id": ObjectId,
-     "plan_name": "Premium Coverage",
-     "vehicle_types": ["Toyota Camry SE"],
-     "region_codes": ["90", "91"],
-     "premium_annual": 1800.00,
-     "idv": 25000.00,
-     "add_ons": ["Zero Depreciation", "Roadside Assistance"]
-   }
-   ```
-
-3. **signals** - Service quality metrics
-   ```javascript
-   {
-     "_id": ObjectId,
-     "plan_id": ObjectId,
-     "claim_tat_days": 15,
-     "claim_approval_rate_pct": 85.5,
-     "csat_score": 78.3,
-     "renewal_rate_pct": 82.1,
-     "complaint_ratio": 0.45
-   }
-   ```
-
-4. **vehicles** - Vehicle catalog
-   ```javascript
-   {
-     "_id": ObjectId,
-     "make": "Toyota",
-     "model": "Camry",
-     "variant": "SE",
-     "year_from": 2020,
-     "year_to": 2024,
-     "category": "Sedan"
-   }
-   ```
-
-5. **query_logs** - Analytics
-   ```javascript
-   {
-     "_id": ObjectId,
-     "timestamp": ISODate,
-     "vehicle": "Toyota Camry",
-     "region_code": "90210",
-     "top_n": 3,
-     "results_count": 3,
-     "weights": {...}
-   }
-   ```
-
-## Extending the System
-
-### Adding a New Criterion
-
-1. **Update TOPSIS Algorithm**
-
-Edit `flask_service/models/topsis.py`:
-
+1. **Normalize Criteria:**
 ```python
-def prepare_decision_matrix(self, plans):
-    # Add new criterion
-    sustainability_value = plan.get('carbon_offset_pct', 0) / 100
-    
-    matrix_data.append({
-        'cost': cost_value,
-        'coverage': coverage_value,
-        'service': service_value,
-        'reliability': reliability_value,
-        'sustainability': sustainability_value  # NEW
-    })
+# Convert all criteria to comparable scale (0-1)
+normalized_matrix = normalize(decision_matrix)
 ```
 
-2. **Update Default Weights**
-
-Edit `flask_service/config.py`:
-
+2. **Apply Weights:**
 ```python
-DEFAULT_WEIGHTS = {
-    'cost': 0.25,
-    'coverage': 0.20,
-    'service': 0.20,
-    'reliability': 0.20,
-    'sustainability': 0.15  # NEW
+# Apply user preferences
+weighted_matrix = normalized_matrix * weights
+# weights = {cost: 0.30, coverage: 0.25, service: 0.25, reliability: 0.20}
+```
+
+3. **Calculate Ideal Solutions:**
+```python
+# Best possible values (ideal solution)
+ideal_best = max(each_criterion)
+ 
+
+# Worst possible values (anti-ideal solution)
+ideal_worst = min(each_criterion)
+```
+
+4. **Calculate Distances:**
+```python
+# Distance from ideal
+distance_best = euclidean_distance(option, ideal_best)
+ 
+
+# Distance from anti-ideal
+distance_worst = euclidean_distance(option, anti_ideal)
+```
+
+5. **Calculate Scores:**
+```python
+# Closeness coefficient (0-1, higher is better)
+score = distance_worst / (distance_best + distance_worst)
+```
+
+### Criteria Used
+
+| Criterion | Weight | Description |
+|-----------|--------|-------------|
+| Cost | 30% | Premium affordability |
+| Coverage | 25% | Coverage comprehensiveness |
+| Service | 25% | Customer service quality |
+| Reliability | 20% | Claims processing reliability |
+
+**Users can customize weights in the search form.**
+
+---
+
+## Database Schema
+
+### MongoDB Collections
+
+#### 1. Insurers Collection
+```javascript
+{
+_id: ObjectId("..."),
+name: "State Farm",
+region_codes: ["CA-N", "CA-S", "CA-BAY", "CA-SD", "CA-C"],
+regional_coverage: ["Bay Area", "Los Angeles", "San Diego", ...],
+website: "https://www.statefarm.com",
+phone: "1-800-782-8332",
+description: "America's largest auto insurer...",
+market_share_pct: 15.2,
+service_score: 0.78,
+reliability_score: 0.82
 }
 ```
 
-3. **Update Schemas**
-
-Edit `flask_service/models/schemas.py`:
-
-```python
-class ComponentScore(BaseModel):
-    # ... existing fields ...
-    sustainability_score: ComponentScore  # NEW
+#### 2. Vehicles Collection
+```javascript
+{
+_id: ObjectId("..."),
+make: "Toyota",
+model: "Camry",
+year: 2024,
+vehicle_type: "Passenger Car",
+category: "Sedan"
+}
 ```
 
-4. **Update Frontend**
-
-Edit `django_app/templates/recommender/results.html` to display the new criterion.
-
-### Integrating Real Data Sources
-
-**Example: California DMV API**
-
-```python
-# In flask_service/utils/data_sources.py
-
-import requests
-
-def fetch_vehicle_registration_data(vin):
-    """Fetch vehicle data from external API"""
-    api_url = "https://api.example.gov/vehicles"
-    response = requests.get(f"{api_url}/{vin}")
-    return response.json()
-
-# Use in recommendation flow
-vehicle_data = fetch_vehicle_registration_data(vin)
+#### 3. Plans Collection
+```javascript
+{
+_id: ObjectId("..."),
+plan_id: "plan_001",
+insurer_id: ObjectId("..."),
+insurer_name: "State Farm",
+plan_name: "Drive Safe & Save",
+vehicle_types: ["Sedan", "SUV"],
+region_codes: ["CA-N", "CA-S"],
+premium_annual: 2150.00,
+idv: 25000.00,
+add_ons: ["roadside_assistance", "rental_reimbursement"],
+tier: "Standard",
+coverage_details: {
+liability: "100/300/50",
+collision: true,
+comprehensive: true
+}
+}
 ```
 
-### Adding Machine Learning
-
-**Example: XGBoost Ranking**
-
-```python
-# In flask_service/models/ml_ranker.py
-
-import xgboost as xgb
-from sklearn.model_selection import train_test_split
-
-class MLRanker:
-    def __init__(self):
-        self.model = xgb.XGBRanker()
-    
-    def train(self, X, y):
-        """Train ranking model on historical data"""
-        X_train, X_test, y_train, y_test = train_test_split(X, y)
-        self.model.fit(X_train, y_train)
-    
-    def rank(self, plans):
-        """Rank plans using learned model"""
-        features = self.extract_features(plans)
-        scores = self.model.predict(features)
-        return sorted(zip(plans, scores), key=lambda x: x[1], reverse=True)
+#### 4. Signals Collection
+```javascript
+{
+_id: ObjectId("..."),
+plan_id: ObjectId("..."),
+claim_tat_days: 25,
+claim_approval_rate_pct: 92.5,
+csat_score: 4.2,
+renewal_rate_pct: 88.3,
+complaint_ratio: 0.65
+}
 ```
 
-### Implementing Caching
+---
 
-**Redis Integration**:
+## API Endpoints
 
-```python
-# In flask_service/app.py
+### Flask Service (Port 5000)
 
-from flask_caching import Cache
-
-cache = Cache(app, config={
-    'CACHE_TYPE': 'redis',
-    'CACHE_REDIS_URL': Config.REDIS_URL
-})
-
-@app.route('/api/recommend', methods=['POST'])
-@cache.cached(timeout=300, key_prefix=make_cache_key)
-def recommend():
-    # ... existing code ...
+#### 1. Health Check
+```
+GET /health
+Response: {
+"status": "healthy",
+"database": "connected",
+"timestamp": "2024-12-06T10:30:00Z"
+}
 ```
 
-## Testing
+#### 2. Database Statistics
+```
+GET /api/stats
+Response: {
+"insurers": 20,
+"plans": 120,
+"vehicles": 150,
+"signals": 300
+}
+```
 
-### Unit Tests
+#### 3. Get Recommendations
+```
+POST /api/recommend
+Body: {
+"vehicle_make": "string",
+"vehicle_model": "string",
+"vehicle_year": integer,
+"region_code": "string",
+"city": "string",
+"top_n": integer,
+"weights": {
+"cost": float,
+"coverage": float,
+"service": float,
+"reliability": float
+}
+}
 
-**Flask Service**:
+Response: {
+"recommendations": [
+{
+"rank": 1,
+"insurer": "State Farm",
+"plan_name": "Drive Safe & Save",
+"premium_annual": 2150.00,
+"score": 8.7,
+"coverage": {...},
+"service_metrics": {...}
+}
+]
+}
+```
 
+**Example Request:**
 ```bash
-cd flask_service
-pytest tests/
+curl -X POST http://localhost:5000/api/recommend \
+-H "Content-Type: application/json" \
+-d '{
+"vehicle_make": "Toyota",
+"vehicle_model": "Camry",
+"vehicle_year": 2023,
+"region_code": "90210",
+"city": "Beverly Hills",
+"top_n": 3,
+"weights": {
+"cost": 0.30,
+"coverage": 0.25,
+"service": 0.25,
+"reliability": 0.20
+}
+}'
 ```
 
-**Example Test** (`tests/test_topsis.py`):
+---
 
-```python
-import pytest
-from models.topsis import TOPSISRecommender
+## Extending the System
 
-def test_topsis_ranking():
-    recommender = TOPSISRecommender()
-    
-    plans = [
-        {'premium_annual': 1000, 'coverage_idv': 20000, 'signals': {...}},
-        {'premium_annual': 1500, 'coverage_idv': 25000, 'signals': {...}},
-    ]
-    
-    results = recommender.rank_plans(plans, top_n=2)
-    
-    assert len(results) == 2
-    assert results[0]['rank'] == 1
-    assert results[1]['rank'] == 2
-    assert results[0]['final_score'] >= results[1]['final_score']
+### Adding New Insurers
+
+#### Method 1: Manual (Quick)
+
+1. Edit `data/seed_insurers.json`:
+```json
+{
+"name": "New Insurer",
+"region_codes": ["CA-S"],
+"regional_coverage": ["Los Angeles"],
+"website": "https://example.com",
+"phone": "1-800-XXX-XXXX",
+"description": "Description here",
+"market_share_pct": 2.5
+}
 ```
 
-### Integration Tests
-
-```python
-# tests/test_integration.py
-
-def test_end_to_end_recommendation():
-    # Load data
-    db = get_db()
-    loader = DataLoader(db)
-    
-    # Make API request
-    response = requests.post('http://localhost:5000/api/recommend', json={
-        'vehicle_make': 'Toyota',
-        'vehicle_model': 'Camry',
-        'region_code': '90210',
-        'top_n': 3
-    })
-    
-    assert response.status_code == 200
-    data = response.json()
-    assert data['success'] == True
-    assert len(data['recommendations']) == 3
+2. Edit `data/seed_config.json` to add insurer profile:
+```json
+"insurer_profiles": {
+"New Insurer": {
+"service_score": 0.75,
+"reliability_score": 0.80,
+"complaint_ratio": 0.70
+}
+}
 ```
 
-## Performance Optimization
-
-### Database Indexing
-
-```python
-# In database.py
-
-def _create_indexes(self):
-    # Compound index for common queries
-    self.db[Config.COLLECTION_PLANS].create_index([
-        ('vehicle_types', ASCENDING),
-        ('region_codes', ASCENDING),
-        ('premium_annual', ASCENDING)
-    ])
-```
-
-### Query Optimization
-
-```python
-# Use projection to fetch only needed fields
-plans_cursor = plans_collection.find(
-    query,
-    projection={
-        'plan_name': 1,
-        'premium_annual': 1,
-        'idv': 1,
-        'insurer_id': 1
-    }
-)
-```
-
-### Caching Strategy
-
-1. **API-level caching** - Cache recommendation responses for 5 minutes
-2. **Database query caching** - Cache frequently accessed plans
-3. **Static data caching** - Cache insurers and vehicles lists
-
-## Deployment
-
-### Production Configuration
-
-```python
-# flask_service/config.py
-
-class ProductionConfig(Config):
-    DEBUG = False
-    MONGODB_URI = os.getenv('MONGODB_ATLAS_URI')
-    CACHE_ENABLED = True
-```
-
-### Environment Variables
-
+3. Regenerate and reload:
 ```bash
-# Production .env
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/
-DJANGO_DEBUG=False
-DJANGO_ALLOWED_HOSTS=yourdomain.com
-FLASK_SERVICE_URL=https://api.yourdomain.com
+cd data
+python3 generate_seed_data.py
+cd ../flask_service && source myenv/bin/activate
+cd ../scripts && python3 load_data.py
 ```
 
-### Docker Deployment
+#### Method 2: Automatic (Through Fetcher)
 
-```bash
-# Build and push
-docker-compose build
-docker tag insurance-flask:latest registry.com/insurance-flask:latest
-docker push registry.com/insurance-flask:latest
-
-# Deploy
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-## Security Best Practices
-
-1. **API Authentication**: Implement JWT tokens
-2. **HTTPS Only**: Use SSL certificates
-3. **Rate Limiting**: Prevent abuse
-4. **Input Validation**: Use Pydantic schemas
-5. **Environment Variables**: Never commit secrets
-
-## Monitoring
-
-### Logging
-
+1. Modify `data/fetch_external_data.py`:
 ```python
-# Add structured logging
-import logging
-import json
-
-logger = logging.getLogger(__name__)
-
-def log_recommendation(query, results):
-    logger.info(json.dumps({
-        'event': 'recommendation',
-        'query': query,
-        'results_count': len(results),
-        'timestamp': datetime.now().isoformat()
-    }))
+def fetch_california_insurers():
+insurers = [
+# ... existing insurers ...
+{
+"name": "New Insurer",
+"market_share_pct": 2.5,
+# ... other details ...
+}
+]
+return insurers
 ```
 
-### Metrics
+2. Run full refresh:
+```bash
+cd data
+python3 fetch_external_data.py
+python3 generate_seed_data.py
+cd ../flask_service && source myenv/bin/activate
+cd ../scripts && python3 load_data.py
+```
 
-Track:
-- API response times
-- Recommendation quality (user feedback)
-- Database query performance
-- Error rates
+---
 
-## Conclusion
+### Customizing Premium Ranges
 
-This implementation provides a solid foundation for a production-ready insurance recommender system. The modular architecture allows for easy extension and customization based on specific requirements.
+Edit `data/seed_config.json`:
 
+```json
+"premium_ranges": {
+"Sedan": [1860, 3472], // Min and max annual premium
+"SUV": [2232, 3720],
+"Truck": [2356, 3968],
+"Electric": [2728, 4340],
+"Luxury": [3500, 6000] // Add new category
+}
+```
+
+Then regenerate plans:
+```bash
+cd data
+python3 generate_seed_data.py
+cd ../flask_service && source myenv/bin/activate
+cd ../scripts && python3 load_data.py
+```
+
+---
+
+### Adding New California Regions
+
+1. Edit `data/seed_config.json`:
+```json
+"california_regions": {
+"CA-N": "Northern California",
+"CA-S": "Southern California",
+"CA-BAY": "San Francisco Bay Area",
+"CA-SD": "San Diego Area",
+"CA-C": "Central California",
+"CA-DESERT": "Desert Region" // New region
+}
+```
+
+2. Update insurers to cover new region:
+```json
+{
+"name": "State Farm",
+"region_codes": ["CA-N", "CA-S", "CA-BAY", "CA-SD", "CA-C", "CA-DESERT"],
+"regional_coverage": ["Bay Area", "Los Angeles", "San Diego", "Central Valley", "North Coast", "Desert"]
+}
+```
+
+3. Regenerate and reload data:
+```bash
+cd data
+python3 generate_seed_data.py
+cd ../flask_service && source myenv/bin/activate
+cd ../scripts && python3 load_data.py
+```
+
+---
+
+### Modifying TOPSIS Weights
+
+#### Change Default Weights
+
+Edit `flask_service/config.py`:
+```python
+DEFAULT_WEIGHTS = {
+'cost': 0.25, # Change from 0.30
+'coverage': 0.30, # Change from 0.25
+'service': 0.25,
+'reliability': 0.20
+}
+```
+
+#### Add New Criteria
+
+1. Update database schema in `plans` collection
+2. Modify TOPSIS algorithm in `flask_service/models/topsis.py`
+3. Update API endpoint to accept new weight
+4. Update Django form to include new criterion
+
+---
+
+## Code Architecture
+
+### Directory Structure
+
+```
+insurance-recommender/
+├── flask_service/ # Backend API
+│ ├── app.py # Main Flask application
+│ ├── config.py # Configuration
+│ ├── database.py # MongoDB connection
+│ ├── models/
+│ │ ├── topsis.py # Recommendation algorithm
+│ │ └── schemas.py # Data validation schemas
+│ ├── utils/
+│ │ └── data_loader.py # Data loading utilities
+│ └── extraction/
+│ └── llm_extractor.py # LLM-based extraction (optional)
+│
+├── django_app/ # Frontend Dashboard
+│ ├── dashboard/ # Django project settings
+│ ├── recommender/ # Main app
+│ │ ├── views.py # View logic
+│ │ ├── urls.py # URL routing
+│ │ └── models.py # Data models
+│ └── templates/ # HTML templates
+│ ├── base.html
+│ └── recommender/
+│ ├── index.html
+│ ├── search.html
+│ └── results.html
+│
+├── data/ # Data generation
+│ ├── fetch_external_data.py # Fetch from NHTSA API
+│ ├── generate_seed_data.py # Generate plans/signals
+│ └── seed_*.json # Generated data files
+│
+└── scripts/ # Utility scripts
+├── setup.sh # Automated setup
+├── load_data.py # Load data to MongoDB
+├── generate_env.py # Generate .env file
+├── test_california_data.py # Data tests
+└── test_api.py # API tests
+```
+
+### Key Components
+
+#### 1. Flask Service (API)
+
+**Purpose:** Provides REST API for insurance recommendations
+
+**Key Files:**
+- `app.py` - Main application, defines routes
+- `models/topsis.py` - Recommendation algorithm
+- `database.py` - MongoDB connection and queries
+
+**Request Flow:**
+```
+User Request → Flask Route → TOPSIS Algorithm → MongoDB Query → JSON Response
+```
+
+#### 2. Django App (Dashboard)
+
+**Purpose:** Web interface for users
+
+**Key Files:**
+- `recommender/views.py` - Handle user requests
+- `templates/` - HTML templates
+- `static/css/` - Styling
+
+**Request Flow:**
+```
+User Form → Django View → Call Flask API → Display Results
+```
+
+#### 3. Data Generation
+
+**Purpose:** Create realistic California insurance data
+
+**Key Scripts:**
+- `fetch_external_data.py` - Fetch from NHTSA API
+- `generate_seed_data.py` - Generate plans/signals
+
+**Data Flow:**
+```
+NHTSA API → fetch_external_data.py → JSON files → generate_seed_data.py → More JSON files
+```
+
+---
+
+## 📚 Related Documentation
+
+- **[README.md](README.md)** - Project overview
+- **[GETTING_STARTED.md](GETTING_STARTED.md)** - Setup & testing guide
+- **[SETUP_WORKFLOW.md](SETUP_WORKFLOW.md)** - Setup workflow with flowcharts
+- **[data/README.md](data/README.md)** - Data generation details
+- **[scripts/README.md](scripts/README.md)** - Scripts documentation

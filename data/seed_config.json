@@ -1,0 +1,235 @@
+{
+  "data_source": "California, USA",
+  "data_sources_detail": {
+    "rates": "California Department of Insurance 2024",
+    "vehicles": "NHTSA Vehicle API",
+    "insurers": "CA DOI Market Share Report 2024",
+    "complaints": "CA DOI Complaint Ratio Report 2024",
+    "satisfaction": "J.D. Power 2024 California Study"
+  },
+  "last_updated": "2025-12-06",
+  "premium_ranges": {
+    "Sedan": [
+      1395,
+      3478
+    ],
+    "SUV": [
+      1674,
+      3727
+    ],
+    "Truck": [
+      1767,
+      3958
+    ],
+    "Electric": [
+      2046,
+      4338
+    ]
+  },
+  "idv_ranges": {
+    "Sedan": [
+      22000,
+      40000
+    ],
+    "SUV": [
+      30000,
+      55000
+    ],
+    "Truck": [
+      35000,
+      60000
+    ],
+    "Electric": [
+      40000,
+      65000
+    ]
+  },
+  "add_ons_options": [
+    [
+      "Zero Depreciation",
+      "Roadside Assistance"
+    ],
+    [
+      "Zero Depreciation",
+      "Engine Protection",
+      "Rental Car Coverage"
+    ],
+    [
+      "Roadside Assistance",
+      "Personal Accident Cover"
+    ],
+    [
+      "Zero Depreciation",
+      "Roadside Assistance",
+      "Engine Protection"
+    ],
+    [
+      "Personal Accident Cover",
+      "Roadside Assistance",
+      "Rental Car Coverage"
+    ],
+    [
+      "Gap Insurance",
+      "Roadside Assistance"
+    ],
+    [
+      "Uninsured Motorist Coverage",
+      "Personal Accident Cover"
+    ],
+    []
+  ],
+  "plan_tiers": [
+    "Basic",
+    "Standard",
+    "Premium",
+    "Elite"
+  ],
+  "tier_multipliers": {
+    "Basic": 0.85,
+    "Standard": 1.0,
+    "Premium": 1.18,
+    "Elite": 1.35
+  },
+  "insurer_profiles": {
+    "State Farm": {
+      "service": 0.78,
+      "reliability": 0.82
+    },
+    "Geico": {
+      "service": 0.68,
+      "reliability": 0.72
+    },
+    "Progressive": {
+      "service": 0.72,
+      "reliability": 0.76
+    },
+    "Allstate": {
+      "service": 0.74,
+      "reliability": 0.78
+    },
+    "USAA": {
+      "service": 0.92,
+      "reliability": 0.96
+    },
+    "Farmers": {
+      "service": 0.7,
+      "reliability": 0.74
+    },
+    "Mercury Insurance": {
+      "service": 0.75,
+      "reliability": 0.79
+    },
+    "AAA": {
+      "service": 0.8,
+      "reliability": 0.84
+    }
+  },
+  "default_insurer_profile": {
+    "service": 0.72,
+    "reliability": 0.76
+  },
+  "california_regions": {
+    "CA-N": {
+      "name": "Northern California",
+      "major_cities": [
+        "Sacramento",
+        "Redding",
+        "Chico"
+      ],
+      "zip_examples": [
+        "95814",
+        "96001",
+        "95926"
+      ]
+    },
+    "CA-C": {
+      "name": "Central California",
+      "major_cities": [
+        "Fresno",
+        "Bakersfield",
+        "Modesto"
+      ],
+      "zip_examples": [
+        "93721",
+        "93301",
+        "95350"
+      ]
+    },
+    "CA-S": {
+      "name": "Southern California",
+      "major_cities": [
+        "Los Angeles",
+        "Long Beach",
+        "Anaheim"
+      ],
+      "zip_examples": [
+        "90001",
+        "90802",
+        "92801"
+      ]
+    },
+    "CA-BAY": {
+      "name": "San Francisco Bay Area",
+      "major_cities": [
+        "San Francisco",
+        "San Jose",
+        "Oakland"
+      ],
+      "zip_examples": [
+        "94102",
+        "95110",
+        "94601"
+      ]
+    },
+    "CA-SD": {
+      "name": "San Diego Area",
+      "major_cities": [
+        "San Diego",
+        "Chula Vista",
+        "Oceanside"
+      ],
+      "zip_examples": [
+        "92101",
+        "91910",
+        "92054"
+      ]
+    }
+  },
+  "signal_parameters": {
+    "claim_tat": {
+      "base": 28,
+      "min": 7,
+      "max": 45,
+      "variance": 3,
+      "source": "CA DOI Claims Processing Reports"
+    },
+    "claim_approval_rate": {
+      "base": 76,
+      "min": 60,
+      "max": 98,
+      "variance": 5,
+      "source": "Insurance Industry Benchmarks"
+    },
+    "customer_satisfaction": {
+      "base": 72,
+      "min": 50,
+      "max": 100,
+      "variance": 5,
+      "source": "J.D. Power California Study"
+    },
+    "renewal_rate": {
+      "base": 74,
+      "min": 60,
+      "max": 95,
+      "variance": 3,
+      "source": "Industry Retention Reports"
+    },
+    "complaint_ratio": {
+      "base": 0.85,
+      "min": 0.1,
+      "max": 1.5,
+      "variance": 0.1,
+      "source": "CA DOI Complaint Database"
+    }
+  }
+}

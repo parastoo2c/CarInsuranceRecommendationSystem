@@ -1,38 +1,109 @@
 [
   {
     "name": "State Farm",
-    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "region_codes": [
+      "CA-N",
+      "CA-C",
+      "CA-S",
+      "CA-BAY",
+      "CA-SD"
+    ],
     "website": "https://www.statefarm.com",
-    "phone": "1-800-STATE-FARM",
-    "description": "Large national insurer with extensive California presence"
+    "phone": "800-782-8332",
+    "description": "Largest auto insurer in California with comprehensive coverage options",
+    "market_share": 15.2
   },
   {
     "name": "Geico",
-    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "region_codes": [
+      "CA-N",
+      "CA-C",
+      "CA-S",
+      "CA-BAY"
+    ],
     "website": "https://www.geico.com",
-    "phone": "1-800-861-8380",
-    "description": "Online-focused insurer known for competitive pricing"
+    "phone": "800-861-8380",
+    "description": "Competitive rates and strong digital experience in California",
+    "market_share": 12.8
   },
   {
     "name": "Progressive",
-    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "region_codes": [
+      "CA-N",
+      "CA-C",
+      "CA-S",
+      "CA-SD"
+    ],
     "website": "https://www.progressive.com",
-    "phone": "1-800-PROGRESSIVE",
-    "description": "Technology-driven insurer with usage-based options"
+    "phone": "800-776-4737",
+    "description": "Known for usage-based insurance programs in California",
+    "market_share": 11.5
   },
   {
     "name": "Allstate",
-    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "region_codes": [
+      "CA-N",
+      "CA-C",
+      "CA-S",
+      "CA-BAY",
+      "CA-SD"
+    ],
     "website": "https://www.allstate.com",
-    "phone": "1-800-ALLSTATE",
-    "description": "Established insurer with comprehensive coverage options"
+    "phone": "800-255-7828",
+    "description": "Comprehensive coverage with local agents throughout California",
+    "market_share": 9.3
   },
   {
     "name": "USAA",
-    "region_codes": ["90", "91", "92", "93", "94", "95"],
+    "region_codes": [
+      "CA-S",
+      "CA-SD",
+      "CA-BAY"
+    ],
     "website": "https://www.usaa.com",
-    "phone": "1-800-531-USAA",
-    "description": "Military-focused insurer with high satisfaction ratings"
+    "phone": "800-531-8722",
+    "description": "Top-rated service for military families in California",
+    "market_share": 7.8
+  },
+  {
+    "name": "Farmers",
+    "region_codes": [
+      "CA-N",
+      "CA-C",
+      "CA-S",
+      "CA-BAY"
+    ],
+    "website": "https://www.farmers.com",
+    "phone": "800-435-7764",
+    "description": "California-based insurer with strong regional presence",
+    "market_share": 7.1
+  },
+  {
+    "name": "Mercury Insurance",
+    "region_codes": [
+      "CA-N",
+      "CA-C",
+      "CA-S",
+      "CA-BAY",
+      "CA-SD"
+    ],
+    "website": "https://www.mercuryinsurance.com",
+    "phone": "800-503-3724",
+    "description": "California-headquartered with specialized state knowledge",
+    "market_share": 6.2
+  },
+  {
+    "name": "AAA",
+    "region_codes": [
+      "CA-N",
+      "CA-C",
+      "CA-S",
+      "CA-BAY",
+      "CA-SD"
+    ],
+    "website": "https://www.aaa.com",
+    "phone": "800-922-8228",
+    "description": "Strong member benefits and roadside assistance in California",
+    "market_share": 5.9
   }
 ]
-

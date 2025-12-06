@@ -1,46 +1,33 @@
 """
 Generate realistic seed data for insurance plans and quality signals
-
+ 
 This script creates synthetic insurance plans and service quality signals
 calibrated to realistic industry benchmarks for California auto insurance.
+All configuration is loaded dynamically from seed_config.json.
 """
-
+ 
 import json
 import random
 from datetime import datetime
-
-
-def generate_plans(insurers, vehicles, num_plans_per_insurer=10):
+ 
+ 
+def load_config(config_file='seed_config.json'):
+    """Load configuration from JSON file"""
+    with open(config_file, 'r') as f:
+        return json.load(f)
+ 
+ 
+def generate_plans(insurers, vehicles, config, num_plans_per_insurer=10):
     """Generate insurance plans for insurers and vehicle types"""
     plans = []
     plan_counter = 0
     
-    # Premium ranges by vehicle category
-    premium_ranges = {
-        'Sedan': (1200, 2500),
-        'SUV': (1500, 3000),
-        'Truck': (1600, 3200),
-        'Electric': (1800, 3500)
-    }
-    
-    # IDV as percentage of typical vehicle value
-    idv_ranges = {
-        'Sedan': (20000, 35000),
-        'SUV': (25000, 45000),
-        'Truck': (30000, 50000),
-        'Electric': (35000, 55000)
-    }
-    
-    add_ons_options = [
-        ['Zero Depreciation', 'Roadside Assistance'],
-        ['Zero Depreciation', 'Engine Protection'],
-        ['Roadside Assistance', 'Personal Accident Cover'],
-        ['Zero Depreciation', 'Roadside Assistance', 'Engine Protection'],
-        ['Personal Accident Cover', 'Roadside Assistance'],
-        []  # Basic plan
-    ]
-    
-    plan_tiers = ['Basic', 'Standard', 'Premium', 'Elite']
+    # Load configuration from config object
+    premium_ranges = config['premium_ranges']
+    idv_ranges = config['idv_ranges']
+    add_ons_options = config['add_ons_options']
+    plan_tiers = config['plan_tiers']
+    tier_multipliers = config['tier_multipliers']
     
     for insurer in insurers:
         insurer_name = insurer['name']
@@ -56,8 +43,7 @@ def generate_plans(insurers, vehicles, num_plans_per_insurer=10):
             
             # Premium (varies by tier)
             base_premium = random.uniform(*premium_ranges[category])
-            tier_multiplier = {'Basic': 0.85, 'Standard': 1.0, 'Premium': 1.15, 'Elite': 1.3}
-            premium = base_premium * tier_multiplier[tier]
+            premium = base_premium * tier_multipliers[tier]
             
             # IDV
             idv = random.uniform(*idv_ranges[category])
@@ -84,52 +70,67 @@ def generate_plans(insurers, vehicles, num_plans_per_insurer=10):
             plan_counter += 1
     
     return plans
-
-
-def generate_signals(plans):
+ 
+ 
+def generate_signals(plans, config):
     """Generate service quality signals for each plan"""
     signals = []
     
-    # Insurer performance profiles (based on market reputation)
-    insurer_profiles = {
-        'State Farm': {'service': 0.75, 'reliability': 0.80},
-        'Geico': {'service': 0.65, 'reliability': 0.70},
-        'Progressive': {'service': 0.70, 'reliability': 0.75},
-        'Allstate': {'service': 0.72, 'reliability': 0.77},
-        'USAA': {'service': 0.90, 'reliability': 0.95}  # Highest rated
-    }
+    # Load configuration
+    insurer_profiles = config['insurer_profiles']
+    default_profile = config['default_insurer_profile']
+    signal_params = config['signal_parameters']
     
     for plan in plans:
         insurer_name = plan['insurer_name']
-        profile = insurer_profiles.get(insurer_name, {'service': 0.70, 'reliability': 0.75})
+        profile = insurer_profiles.get(insurer_name, default_profile)
         
         # Generate signals with some randomness around insurer's base profile
-        
-        # Claim TAT (days): 7-45 days, lower is better
-        base_tat = 25
         service_factor = profile['service']
-        claim_tat = int(base_tat * (1 - service_factor * 0.5) + random.uniform(-3, 3))
-        claim_tat = max(7, min(45, claim_tat))  # Clamp
+        reliability_factor = profile['reliability']
         
-        # Claim approval rate: 60-98%
-        base_approval = 78
-        approval_rate = base_approval + (service_factor * 20) + random.uniform(-5, 5)
-        approval_rate = max(60, min(98, approval_rate))
+        # Claim TAT (days): lower is better
+        tat_config = signal_params['claim_tat']
+        claim_tat = int(
+            tat_config['base'] * (1 - service_factor * 0.5) + 
+            random.uniform(-tat_config['variance'], tat_config['variance'])
+        )
+        claim_tat = max(tat_config['min'], min(tat_config['max'], claim_tat))
         
-        # Customer satisfaction score: 50-100
-        base_csat = 70
-        csat_score = base_csat + (service_factor * 30) + random.uniform(-5, 5)
-        csat_score = max(50, min(100, csat_score))
+        # Claim approval rate
+        approval_config = signal_params['claim_approval_rate']
+        approval_rate = (
+            approval_config['base'] + 
+            (service_factor * 20) + 
+            random.uniform(-approval_config['variance'], approval_config['variance'])
+        )
+        approval_rate = max(approval_config['min'], min(approval_config['max'], approval_rate))
         
-        # Renewal rate: 60-95%
-        base_renewal = 75
-        renewal_rate = base_renewal + (profile['reliability'] * 20) + random.uniform(-3, 3)
-        renewal_rate = max(60, min(95, renewal_rate))
+        # Customer satisfaction score
+        csat_config = signal_params['customer_satisfaction']
+        csat_score = (
+            csat_config['base'] + 
+            (service_factor * 30) + 
+            random.uniform(-csat_config['variance'], csat_config['variance'])
+        )
+        csat_score = max(csat_config['min'], min(csat_config['max'], csat_score))
         
-        # Complaint ratio: 0.1-1.5 (lower is better)
-        base_complaint = 0.8
-        complaint_ratio = base_complaint * (1 - profile['reliability']) + random.uniform(-0.1, 0.1)
-        complaint_ratio = max(0.1, min(1.5, complaint_ratio))
+        # Renewal rate
+        renewal_config = signal_params['renewal_rate']
+        renewal_rate = (
+            renewal_config['base'] + 
+            (reliability_factor * 20) + 
+            random.uniform(-renewal_config['variance'], renewal_config['variance'])
+        )
+        renewal_rate = max(renewal_config['min'], min(renewal_config['max'], renewal_rate))
+        
+        # Complaint ratio: lower is better
+        complaint_config = signal_params['complaint_ratio']
+        complaint_ratio = (
+            complaint_config['base'] * (1 - reliability_factor) + 
+            random.uniform(-complaint_config['variance'], complaint_config['variance'])
+        )
+        complaint_ratio = max(complaint_config['min'], min(complaint_config['max'], complaint_ratio))
         
         signal = {
             'plan_id': plan['plan_id'],
@@ -143,11 +144,16 @@ def generate_signals(plans):
         signals.append(signal)
     
     return signals
-
-
+ 
+ 
 def main():
     """Generate and save seed data"""
     print("Generating seed data...")
+    
+    # Load configuration
+    print("Loading configuration...")
+    config = load_config('seed_config.json')
+    print("✓ Configuration loaded")
     
     # Load insurers and vehicles
     with open('seed_insurers.json', 'r') as f:
@@ -158,30 +164,30 @@ def main():
     
     # Generate plans
     print("Generating insurance plans...")
-    plans = generate_plans(insurers, vehicles, num_plans_per_insurer=10)
-    print(f"Generated {len(plans)} plans")
+    plans = generate_plans(insurers, vehicles, config, num_plans_per_insurer=10)
+    print(f"✓ Generated {len(plans)} plans")
     
     # Generate signals
     print("Generating service quality signals...")
-    signals = generate_signals(plans)
-    print(f"Generated {len(signals)} signal records")
+    signals = generate_signals(plans, config)
+    print(f"✓ Generated {len(signals)} signal records")
     
     # Save to files
     with open('seed_plans.json', 'w') as f:
         json.dump(plans, f, indent=2)
-    print("Saved to seed_plans.json")
+    print("✓ Saved to seed_plans.json")
     
     with open('seed_signals.json', 'w') as f:
         json.dump(signals, f, indent=2)
-    print("Saved to seed_signals.json")
+    print("✓ Saved to seed_signals.json")
     
     print("\nData generation complete!")
     print(f"Total insurers: {len(insurers)}")
     print(f"Total vehicles: {len(vehicles)}")
     print(f"Total plans: {len(plans)}")
     print(f"Total signals: {len(signals)}")
-
-
+ 
+ 
 if __name__ == '__main__':
     main()
-
+ 
